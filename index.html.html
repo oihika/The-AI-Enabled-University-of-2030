@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIU 2030 — AI-Enabled University of 2030</title>
+<style>
+:root{
+  --green:#12a84a; --green2:#0b7f3d; --lime:#68d85a; --blue:#0797e6;
+  --sky:#dff5ff; --navy:#10385f; --ink:#12334f; --muted:#5c7890;
+  --white:#fff; --bg:#eefbff; --card:rgba(255,255,255,.93);
+  --shadow:0 10px 30px rgba(26,95,125,.12); --radius:18px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:
+radial-gradient(circle at 15% 5%,#c8f4dc 0 8%,transparent 25%),
+radial-gradient(circle at 88% 8%,#ccefff 0 10%,transparent 28%),var(--bg)}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+.app{display:flex;min-height:100vh}
+.sidebar{width:230px;position:fixed;left:0;top:0;bottom:0;background:rgba(255,255,255,.94);border-right:1px solid #d7eef4;padding:18px 14px;z-index:30}
+.brand{display:flex;gap:10px;align-items:center;padding:4px 8px 18px}
+.leaf-logo{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#dfffe5,#b7f3c8);display:grid;place-items:center;color:var(--green2);font-size:25px}
+.brand b{font-size:20px;color:#103b59}.brand small{display:block;color:#47708a;margin-top:2px}
+.nav{display:grid;gap:5px}.nav button{background:transparent;color:#385878;text-align:left;padding:11px 10px;border-radius:11px;display:flex;gap:11px;align-items:center}
+.nav button:hover,.nav button.active{background:linear-gradient(90deg,#d7f8d2,#e8f8ff);color:var(--green2);font-weight:700}
+.quote{border-top:1px solid #d9edf2;margin-top:14px;padding:18px 9px;color:#446b85;line-height:1.55;font-size:13px}
+.quote strong{color:var(--green2)}
+.main{margin-left:230px;width:calc(100% - 230px);padding:12px 20px 30px}
+.topbar{height:58px;display:flex;align-items:center;gap:15px}
+.search{flex:1;max-width:560px;background:#fff;border:1px solid #cce7ee;border-radius:28px;padding:11px 18px;display:flex;gap:10px;box-shadow:0 4px 15px rgba(0,0,0,.04)}
+.search input{border:0;outline:0;width:100%;color:var(--ink)}
+.user{margin-left:auto;display:flex;align-items:center;gap:9px;font-size:13px}.avatar{width:37px;height:37px;border-radius:50%;background:#13a85a;color:#fff;display:grid;place-items:center;font-weight:800}
+.hero{position:relative;overflow:hidden;min-height:390px;border-radius:24px;background:linear-gradient(135deg,#eaffee 0%,#dff7ff 48%,#bcefff 100%);box-shadow:var(--shadow);border:1px solid #d2edf1}
+.doodle{position:absolute;inset:0;opacity:.5;pointer-events:none;background-image:
+radial-gradient(circle at 9% 24%,#72d86b 0 2px,transparent 3px),
+radial-gradient(circle at 85% 20%,#12a84a 0 2px,transparent 3px);
+background-size:48px 48px}
+.hero-content{position:relative;z-index:2;padding:52px 48% 35px 42px;min-height:390px}
+.kicker{color:var(--green2);font-weight:800;font-size:16px}.hero h1{font-size:48px;line-height:.98;margin:8px 0 14px;color:#113f63}.hero h1 span{color:#078a46}.hero p{font-size:17px;line-height:1.45;color:#315c78;max-width:650px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn{padding:12px 18px;border-radius:28px;font-weight:800}
+.primary{background:linear-gradient(90deg,#0aa64b,#19b95b);color:#fff;box-shadow:0 7px 18px #0aa64b33}.secondary{background:#fff;color:#0878b7;border:1px solid #1a9fe2}
+.hero-art{position:absolute;right:1.5%;bottom:-2px;width:49%;height:92%;min-width:430px}
+.hero-art svg{width:100%;height:100%}
+.leaf{position:absolute;font-size:42px;color:#21ad50;opacity:.55;animation:float 5s ease-in-out infinite}
+.leaf.l1{left:2%;top:12%}.leaf.l2{right:2%;top:8%;animation-delay:1s}.leaf.l3{left:42%;bottom:2%;animation-delay:2s}
+@keyframes float{50%{transform:translateY(-9px) rotate(3deg)}}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.stat{background:var(--card);border:1px solid #d7edf3;border-radius:16px;padding:16px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center}
+.stat .ico{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;background:#e4f8ff;font-size:23px}.stat b{font-size:23px}.stat small{display:block;color:var(--muted)}
+.section{margin-top:18px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:10px}.section h2{margin:0;color:#123d5f;font-size:25px}.section-head p{margin:4px 0 0;color:var(--muted)}
+.linkbtn{background:none;color:#007fd1;font-weight:800}
+.domains{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.domain{background:var(--card);border:1px solid #d7edf3;border-radius:17px;overflow:hidden;box-shadow:var(--shadow);transition:.2s;cursor:pointer}
+.domain:hover{transform:translateY(-3px)} .domain .pic{height:110px;display:grid;place-items:center;background:linear-gradient(135deg,#e4f9df,#e1f7ff)}
+.domain .pic svg{width:92%;height:100%}.domain-body{padding:13px}.domain h3{font-size:14px;margin:0 0 8px;color:#123e61}.domain p{font-size:12px;line-height:1.35;color:#55758a;min-height:50px}.pill{display:inline-block;border-radius:20px;padding:6px 9px;background:#dff7dc;color:#168844;font-size:11px;font-weight:800}
+.panels{display:grid;grid-template-columns:1.15fr .9fr .9fr;gap:12px;margin-top:12px}
+.panel{background:var(--card);border:1px solid #d7edf3;border-radius:17px;padding:16px;box-shadow:var(--shadow)}
+.panel h3{margin:0;color:#0d4a72}.panel .sub{font-size:12px;color:var(--muted);margin:4px 0 14px}
+.range{margin:12px 0}.range label{display:flex;justify-content:space-between;font-size:12px;font-weight:700}.range input{width:100%;accent-color:var(--green)}
+.outcomes{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:15px}.out{background:#f4fbfd;border-radius:12px;text-align:center;padding:9px}.out b{font-size:20px;color:#087fbb}.out small{display:block;font-size:10px;color:#567286}
+.progress{height:8px;background:#e5f2f5;border-radius:20px;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,#12a84a,#5fda5c);border-radius:20px}
+.steps{display:grid;gap:7px}.step{display:flex;gap:10px;align-items:center;font-size:12px}.step span{width:30px;height:30px;border-radius:50%;background:#e2f7ff;color:#087bb8;display:grid;place-items:center;font-weight:900}
+select{width:100%;border:1px solid #c8e2e9;background:#fff;border-radius:10px;padding:9px;color:var(--ink)}
+.riskbox{background:#effbf0;border-radius:12px;padding:12px;margin-top:10px}.riskbox b{color:#087c42}.riskbox p{font-size:12px;line-height:1.4;color:#49697d}
+.campus{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-top:12px}.map{min-height:250px;background:linear-gradient(145deg,#dff7d8,#dff6ff);border-radius:14px;position:relative;overflow:hidden;padding:20px}
+.map svg{width:100%;height:100%}.toggles{display:grid;gap:9px}.toggle{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#f6fcfd;border-radius:11px;font-size:12px}.switch{width:40px;height:22px;border-radius:20px;background:#b8d4df;padding:3px}.switch i{display:block;width:16px;height:16px;border-radius:50%;background:#fff;transition:.2s}.switch.on{background:#11a84b}.switch.on i{transform:translateX(18px)}
+.jobs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.job{padding:13px;border-radius:13px;background:#f1fbf4;border:1px solid #d9f0df}.job .arrow{color:#10a54b;font-weight:900}.job b{display:block;margin:5px 0;color:#143f5f}
+.capgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.cap{background:#fff;border:1px solid #d9edf3;border-radius:14px;padding:13px;cursor:pointer;transition:.2s}.cap:hover{border-color:#22b65b;box-shadow:0 7px 20px #0ca64b18}.cap strong{font-size:12px}.cap p{font-size:11px;color:var(--muted);margin:7px 0}.tag{font-size:10px;color:#0785bd;font-weight:800}
+.footer{margin-top:18px;border-radius:18px;background:linear-gradient(100deg,#087c43,#0da652 48%,#087cb6);color:#fff;padding:24px;position:relative;overflow:hidden}.footer h3{margin:0 0 7px}.footer p{margin:0;max-width:760px;font-size:13px;line-height:1.5;opacity:.95}
+.modal{position:fixed;inset:0;background:#06345188;display:none;place-items:center;z-index:100;padding:20px}.modal.open{display:grid}.modal-card{max-width:700px;width:100%;background:#fff;border-radius:20px;padding:22px;box-shadow:0 20px 60px #073c5b55;max-height:88vh;overflow:auto}.close{float:right;background:#edf8fb;border-radius:50%;width:34px;height:34px;font-weight:900}.modal h2{color:#0c4a70}.modal li{margin:8px 0;font-size:13px;color:#49687b}
+.toast{position:fixed;right:20px;bottom:20px;background:#103f5f;color:#fff;padding:12px 16px;border-radius:12px;display:none;z-index:150;box-shadow:var(--shadow)}
+@media(max-width:1100px){.domains{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.panels{grid-template-columns:1fr}.hero-content{padding-right:45%}.hero-art{opacity:.55}}
+@media(max-width:800px){.sidebar{width:68px}.sidebar .brand div:last-child,.sidebar .nav span,.quote{display:none}.main{margin-left:68px;width:calc(100% - 68px)}.hero-content{padding:35px 25px;max-width:100%}.hero-art{display:none}.hero h1{font-size:38px}.domains{grid-template-columns:1fr 1fr}.campus{grid-template-columns:1fr}.jobs,.capgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.main{padding:8px}.domains,.stats,.jobs,.capgrid{grid-template-columns:1fr}.topbar .user span{display:none}.hero h1{font-size:33px}.outcomes{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="leaf-logo">↗</div><div><b>AIU 2030</b><small>Intelligent. Sustainable.<br>Human-Centred.</small></div></div>
+  <nav class="nav">
+    <button class="active" onclick="go('home')">⌂ <span>Home</span></button>
+    <button onclick="go('vision')">✧ <span>The Vision</span></button>
+    <button onclick="go('domains')">◈ <span>5 Domains</span></button>
+    <button onclick="go('capabilities')">▦ <span>30 AI Capabilities</span></button>
+    <button onclick="go('simulator')">⌁ <span>Scenario Simulator</span></button>
+    <button onclick="go('assurance')">✓ <span>Assurance Matrix</span></button>
+    <button onclick="go('risks')">⚠ <span>Risk Register</span></button>
+    <button onclick="go('jobs')">♙ <span>Human–AI Jobs</span></button>
+    <button onclick="go('governance')">◉ <span>Governance & Policy</span></button>
+    <button onclick="go('about')">ⓘ <span>About</span></button>
+  </nav>
+  <div class="quote">“A more intelligent, more sustainable, more inclusive, more <strong>human-centred</strong> university.”</div>
+</aside>
+
+<main class="main" id="home">
+<header class="topbar">
+  <div class="search">⌕ <input id="search" placeholder="Search capabilities, use cases, risks..." oninput="searchCaps(this.value)"></div>
+  <div class="user">☀️ Good Morning! <span> | </span><div class="avatar">OA</div><b>Oihika Arpit</b>⌄</div>
+</header>
+
+<section class="hero" id="vision">
+  <div class="doodle"></div><div class="leaf l1">🍃</div><div class="leaf l2">🌿</div><div class="leaf l3">🍃</div>
+  <div class="hero-content">
+    <div class="kicker">Welcome to the</div>
+    <h1><span>AI-Enabled</span><br>University of 2030</h1>
+    <p>A Human-Centred AI Ecosystem for Education, Sustainability, Governance and the Future of Work</p>
+    <div class="actions"><button class="btn primary" onclick="go('domains')">Explore the Ecosystem →</button><button class="btn secondary" onclick="showModal('video')">▶ Watch Concept</button></div>
+  </div>
+  <div class="hero-art">
+    <svg viewBox="0 0 620 390" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b9efff"/><stop offset="1" stop-color="#e6ffe7"/></linearGradient></defs>
+      <rect width="620" height="390" fill="url(#sky)" opacity=".5"/>
+      <circle cx="500" cy="55" r="35" fill="#ffe45b"/><g stroke="#f3b900" stroke-width="4">
+      <path d="M500 5v-18M500 123v18M450 55h-18M568 55h18M465 20l-13-13M535 90l13 13M535 20l13-13M465 90l-13 13"/></g>
+      <path d="M0 315 Q160 260 310 310 T620 290 V390H0Z" fill="#8adf88"/>
+      <path d="M0 340 Q150 295 300 335 T620 320 V390H0Z" fill="#4fc9d9" opacity=".7"/>
+      <g fill="#fff" stroke="#0c80b7" stroke-width="4"><rect x="180" y="135" width="260" height="165" rx="6"/><rect x="220" y="92" width="180" height="210" rx="5"/></g>
+      <g fill="#9de8ff" stroke="#0c80b7" stroke-width="3"><rect x="238" y="116" width="42" height="48"/><rect x="292" y="116" width="42" height="48"/><rect x="346" y="116" width="42" height="48"/><rect x="238" y="180" width="42" height="48"/><rect x="292" y="180" width="42" height="48"/><rect x="346" y="180" width="42" height="48"/></g>
+      <rect x="285" y="240" width="50" height="60" fill="#dff5ff" stroke="#0c80b7" stroke-width="3"/>
+      <g stroke="#fff" stroke-width="6"><path d="M70 305l25-95M95 305l-25-95M82 210l18-30M82 210l-18-30"/><path d="M535 305l20-90M555 305l-20-90M545 215l18-26M545 215l-18-26"/></g>
+      <g fill="#0e9349"><circle cx="90" cy="305" r="25"/><circle cx="520" cy="310" r="27"/><circle cx="155" cy="300" r="22"/><circle cx="465" cy="305" r="23"/></g>
+      <g fill="#f5fbff" stroke="#0e9349" stroke-width="2"><rect x="42" y="65" width="70" height="42" rx="8"/><path d="M55 82h45M55 92h31"/></g>
+      <g stroke="#087db5" stroke-width="3" fill="none"><path d="M485 100q30-25 60 0q-30 25-60 0Z"/><path d="M500 100l-12-20M530 100l12-20"/></g>
+    </svg>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><div class="ico">🎓</div><div><b>30</b><small>AI Capabilities<br>Across 5 Domains</small></div></div>
+  <div class="stat"><div class="ico">🌿</div><div><b>Net Zero</b><small>Sustainability Goal<br>Greener Campus</small></div></div>
+  <div class="stat"><div class="ico">👥</div><div><b>Human-Centred</b><small>AI with Accountability<br>People First</small></div></div>
+  <div class="stat"><div class="ico">▥</div><div><b>Smarter Decisions</b><small>Data-Driven Impact<br>Better Outcomes</small></div></div>
+</div>
+
+<section class="section" id="domains">
+  <div class="section-head"><div><h2>Explore the Five Domains</h2><p>Click a domain to explore AI capabilities, use cases, risks and impact.</p></div><button class="linkbtn" onclick="go('capabilities')">View All 30 Capabilities →</button></div>
+  <div class="domains" id="domainGrid"></div>
+</section>
+
+<section class="panels">
+  <div class="panel" id="simulator">
+    <h3>🌿 2030 Scenario Simulator</h3><div class="sub">Adjust the sliders to see the impact on key outcomes.</div>
+    <div class="range"><label>AI Adoption Level <b id="aiv">70%</b></label><input type="range" min="0" max="100" value="70" oninput="sim()"></div>
+    <div class="range"><label>Automation Exposure <b id="autv">50%</b></label><input type="range" min="0" max="100" value="50" oninput="sim()"></div>
+    <div class="range"><label>Human Oversight <b id="hov">80%</b></label><input type="range" min="0" max="100" value="80" oninput="sim()"></div>
+    <div class="range"><label>Sustainability Maturity <b id="suv">70%</b></label><input type="range" min="0" max="100" value="70" oninput="sim()"></div>
+    <div class="outcomes"><div class="out"><b id="og">68</b><small>Governance<br>Pressure</small></div><div class="out"><b id="oh">82</b><small>Human Oversight<br>Index</small></div><div class="out"><b id="os">88</b><small>Sustainability<br>Readiness</small></div><div class="out"><b id="ow">65</b><small>Workforce<br>Transition</small></div></div>
+    <button class="btn primary" style="width:100%;margin-top:14px" onclick="toast('Scenario calculated — use the result as a conceptual planning aid.')">Run Scenario →</button>
+  </div>
+
+  <div class="panel" id="assurance">
+    <h3>🛡️ AI Assurance Lifecycle</h3><div class="sub">From risk to responsible impact.</div>
+    <div class="steps">
+      <div class="step"><span>1</span><b>Identify</b> Map use cases and risks</div>
+      <div class="step"><span>2</span><b>Assess</b> Evaluate impact and evidence</div>
+      <div class="step"><span>3</span><b>Approve</b> Governance and human oversight</div>
+      <div class="step"><span>4</span><b>Deploy</b> Responsible implementation</div>
+      <div class="step"><span>5</span><b>Monitor</b> Track performance and impacts</div>
+      <div class="step"><span>6</span><b>Adapt</b> Continuous improvement</div>
+    </div>
+    <button class="btn primary" style="width:100%;margin-top:12px" onclick="showModal('assurance')">Explore Assurance Matrix →</button>
+  </div>
+
+  <div class="panel" id="risks">
+    <h3>⚠️ AI Risk Register</h3><div class="sub">Explore the 10 key AI-risk domains.</div>
+    <select id="riskSelect" onchange="riskInfo(this.value)">
+      <option value="tutor">AI Tutoring</option><option value="assessment">Assessment Integrity</option><option value="research">AI Research Assistance</option><option value="recruitment">AI Recruitment</option><option value="wellbeing">Wellbeing AI</option><option value="agents">Autonomous AI Agents</option><option value="surveillance">Digital-Campus Surveillance</option><option value="accessibility">Accessibility AI</option><option value="synthetic">Synthetic-Media Integrity</option><option value="governance">Institution-wide AI Governance</option>
+    </select>
+    <div class="riskbox" id="riskBox"><b>AI Tutoring</b><p>Risk of over-reliance, reduced learning, inaccurate content and equity gaps.</p><b>Control:</b> learning evidence, teacher oversight, disclosure and student recourse.</div>
+  </div>
+</section>
+
+<section class="campus">
+  <div class="panel"><h3>🗺️ Interactive Campus Map <small style="color:#7a94a4">(Conceptual)</small></h3><div class="sub">Explore a smart, sustainable campus.</div>
+    <div class="map"><svg viewBox="0 0 700 300">
+      <rect width="700" height="300" fill="#dff5d8" rx="18"/><path d="M0 245 Q180 175 340 235 T700 180" fill="none" stroke="#65cdd9" stroke-width="38"/>
+      <g fill="#fff" stroke="#1b7db3" stroke-width="3"><rect x="80" y="70" width="130" height="80" rx="8"/><rect x="275" y="50" width="150" height="100" rx="8"/><rect x="485" y="85" width="125" height="75" rx="8"/><rect x="245" y="190" width="135" height="70" rx="8"/></g>
+      <g fill="#b8e8ff"><rect x="98" y="88" width="42" height="25"/><rect x="151" y="88" width="42" height="25"/><rect x="300" y="72" width="42" height="25"/><rect x="353" y="72" width="42" height="25"/></g>
+      <g fill="#4fc66b"><circle cx="50" cy="50" r="22"/><circle cx="230" cy="55" r="19"/><circle cx="450" cy="40" r="24"/><circle cx="650" cy="55" r="22"/><circle cx="65" cy="180" r="20"/><circle cx="440" cy="210" r="23"/><circle cx="635" cy="205" r="20"/></g>
+      <g font-family="Arial" font-size="15" font-weight="700" fill="#123e5e"><text x="88" y="165">Learning Hub</text><text x="290" y="170">Smart Buildings</text><text x="492" y="180">Student Hub</text><text x="255" y="280">Green Mobility</text></g>
+      <g fill="#16a84d"><circle cx="115" cy="60" r="8"/><circle cx="345" cy="40" r="8"/><circle cx="548" cy="72" r="8"/></g>
+    </svg></div>
+  </div>
+  <div class="panel"><h3>📊 Live Insights</h3><div class="sub">Conceptual indicators for a smarter, greener campus.</div>
+    <div class="toggles">
+      <div class="toggle">Energy Flow <div class="switch on" onclick="this.classList.toggle('on')"><i></i></div></div>
+      <div class="toggle">Buildings <div class="switch on" onclick="this.classList.toggle('on')"><i></i></div></div>
+      <div class="toggle">Mobility <div class="switch" onclick="this.classList.toggle('on')"><i></i></div></div>
+      <div class="toggle">Green Spaces <div class="switch on" onclick="this.classList.toggle('on')"><i></i></div></div>
+      <div class="toggle">AI Sensors <div class="switch" onclick="this.classList.toggle('on')"><i></i></div></div>
+    </div>
+    <div style="margin-top:16px;padding:13px;border-radius:13px;background:#effbf4"><b style="font-size:26px;color:#0c9b48">−35%</b><span style="font-size:12px;color:#55758a"> Energy Use vs 2024</span><br><b style="font-size:26px;color:#efb900">62%</b><span style="font-size:12px;color:#55758a"> Renewable Energy Share</span></div>
+  </div>
+</section>
+
+<section class="section" id="capabilities">
+  <div class="section-head"><div><h2>30 AI Capabilities</h2><p>Search and click any capability to inspect its purpose, risk and assurance focus.</p></div></div>
+  <div class="capgrid" id="capGrid"></div>
+</section>
+
+<section class="section" id="jobs">
+  <div class="section-head"><div><h2>Human–AI Job Evolution</h2><p>AI should change tasks before it eliminates professions.</p></div></div>
+  <div class="jobs" id="jobGrid"></div>
+</section>
+
+<section class="section" id="governance">
+  <div class="panel"><h2>Human–AI Collaboration & Ethical Governance</h2>
+  <p class="sub">The proposed ecosystem follows six principles.</p>
+  <div class="capgrid">
+    <div class="cap"><strong>01 — Augment Human Capability</strong><p>Use AI to improve human performance wherever possible.</p></div>
+    <div class="cap"><strong>02 — Retain Accountability</strong><p>Identifiable human responsibility remains for consequential decisions.</p></div>
+    <div class="cap"><strong>03 — Risk-Based Automation</strong><p>The higher the potential harm, the stronger the human oversight.</p></div>
+    <div class="cap"><strong>04 — Transparency</strong><p>Users should understand when and how AI affects them.</p></div>
+    <div class="cap"><strong>05 — Evolve Human Work</strong><p>Redesign roles when tasks are automated rather than simply removing people.</p></div>
+    <div class="cap"><strong>06 — Reskilling by Design</strong><p>AI deployment should include workforce-transition planning.</p></div>
+  </div>
+</div>
+</section>
+
+<section class="footer" id="about">
+  <h3>🌱 Our Vision for 2030</h3>
+  <p>“AI should not simply make the university more automated. It should make the university more intelligent, more inclusive, more sustainable, more adaptive and more human-centred.”</p>
+  <p style="margin-top:12px"><b>People • Planet • Progress</b> &nbsp; | &nbsp; Clean Energy &nbsp; | &nbsp; Inclusive Education &nbsp; | &nbsp; Sustainable Campus &nbsp; | &nbsp; Human Potential</p>
+</section>
+</main>
+</div>
+
+<div class="modal" id="modal"><div class="modal-card"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const domains=[
+ {id:1,title:"AI Education, Learning & Research",short:"Personalised learning, research support and academic excellence.",n:8,icon:"📚",color:"green"},
+ {id:2,title:"Smart Campus, Energy & Sustainability",short:"Efficient, green and intelligent campus operations.",n:8,icon:"🌿",color:"blue"},
+ {id:3,title:"Student Life, Wellbeing & Safety",short:"A supportive, inclusive and safe university community.",n:7,icon:"🌳",color:"green"},
+ {id:4,title:"Career, Administration & Decision Intelligence",short:"Smarter administration, careers and data-driven decisions.",n:5,icon:"📊",color:"blue"},
+ {id:5,title:"Human–AI Collaboration, Future of Work & Governance",short:"Responsible AI, evolving roles and ethical governance.",n:2,icon:"🤖",color:"green"}
+];
+const caps=[
+["AI Tutor",1,"Personalised learning","Over-reliance, hallucination, inequitable support","Learning outcomes + human/teacher oversight"],
+["AI Research Assistant",1,"Research discovery and support","Fabricated evidence, citation errors, bias","Source verification + auditability"],
+["AI Library & Knowledge Assistant",1,"Knowledge retrieval and navigation","Misinformation, access and privacy risks","Evidence traceability + librarian oversight"],
+["AI Faculty / Teaching Assistant",1,"Teaching preparation and feedback","Over-automation, bias, pedagogical mismatch","Faculty accountability + course-level controls"],
+["AI Student Coordinator",1,"Student scheduling and support","Privacy, exclusion, wrong recommendations","Transparency + human escalation"],
+["AI Extracurricular & Skills Trainer",1,"Skills and activity recommendations","Profiling, unequal opportunities","Fairness + student choice"],
+["AI Innovation & Entrepreneurship Hub",1,"Idea development and venture support","IP/confidentiality, biased recommendations","IP controls + human review"],
+["AI International Collaboration & Networking",1,"Global matching and collaboration","Profiling, privacy, cultural bias","Consent + transparent matching"],
+["AI Smart Energy Management",2,"Forecasting and campus energy control","Operational error, resilience risk","Forecast/control metrics + fallback"],
+["Solar PV & Battery Management",2,"Renewable generation and storage optimisation","Safety, degradation, wrong dispatch","Safety limits + engineering oversight"],
+["AI Water Management",2,"Water demand, leakage and optimisation","Sensor/model failure","Performance monitoring + manual override"],
+["AI Waste & Resource Management",2,"Waste sorting and resource efficiency","Classification error, worker impacts","Accuracy + worker safety review"],
+["Smart EV & Sustainable Mobility",2,"EV charging and mobility optimisation","Access inequity, grid constraints","Fairness + operational constraints"],
+["AI Smart Building Management",2,"HVAC, lighting and building optimisation","Comfort, safety, cybersecurity","Safety thresholds + override"],
+["AI Sustainability & Carbon Management",2,"Carbon accounting and sustainability decisions","Bad data, greenwashing","Data provenance + audit"],
+["University Digital Twin",2,"Simulation and decision support","Model error, false confidence","Validation + decision-usefulness review"],
+["AI Counsellor & Wellbeing Support",3,"Wellbeing information and support","Unsafe advice, dependence","Human referral + escalation"],
+["AI Mental-Health Support & Human Referral",3,"Triage and referral support","Missed high-risk cases","Recall + escalation quality"],
+["AI Student Union & Student Voice",3,"Feedback and participation","Manipulation, unequal voice","Transparency + representative governance"],
+["AI Student Life & Community Platform",3,"Community discovery and services","Profiling, privacy","Consent + data minimisation"],
+["AI Campus Health Assistant",3,"Health information and navigation","Incorrect advice, sensitive data","Clinical boundaries + human referral"],
+["AI Campus Safety & Emergency Support",3,"Incident detection and response","False alarms or missed emergencies","Recall + human command"],
+["AI Campus Services Assistant",3,"Facilities and student service support","Wrong routing, inaccessible service","Service accuracy + accessibility"],
+["AI Placement & Career Assistant",4,"Career matching and preparation","Bias, opaque recommendations","Equal performance + human review"],
+["AI Placement Faculty / Career Mentor",4,"Faculty-supported career intelligence","Automation bias","Faculty accountability"],
+["Faculty Dashboard",4,"Teaching and academic intelligence","Misleading indicators, surveillance","Contextual interpretation + access control"],
+["Administrator Dashboard",4,"Institutional performance intelligence","Over-reliance, privacy","Governance + auditability"],
+["AI Decision Engine",4,"Cross-campus decision support","Concentration of decision power","Human decision-maker + explainability"],
+["Human–AI Role Evolution & Future of Work",5,"Task-to-role transition planning","Job displacement, inequity","Skills-gap analysis + reskilling"],
+["Human–AI Collaboration & Ethical Governance",5,"Responsible AI governance","Fragmented accountability","Policy + assurance + continuous monitoring"]
+];
+const jobs=[
+["Librarian","AI Knowledge & Information Curator"],["Research Assistant","AI Research Strategist"],["Professor","AI-Augmented Educator & Mentor"],
+["Administrator","AI Governance & Decision Manager"],["Placement Officer","Human–AI Career Strategist"],["Counsellor","Human Wellbeing Specialist Supported by AI"],
+["Energy Manager","AI Energy & Sustainability Manager"],["Student Coordinator","Student Experience & Community Strategist"],
+["Academic Integrity Officer","AI Assessment Integrity & Review Specialist"],["Accessibility Officer","AI Inclusion & Accessibility Strategist"],
+["Campus Security Officer","Human Safety & AI Oversight Specialist"],["Sustainability Officer","AI Sustainability & Climate Manager"]
+];
+const risks={
+tutor:["AI Tutoring","Risk of over-reliance, reduced learning, inaccurate content and equity gaps.","Learning evidence, teacher oversight, disclosure and student recourse."],
+assessment:["Assessment Integrity","False positives can create academic, reputational and due-process harms.","Precision, ground-truth testing and mandatory human review."],
+research:["AI Research Assistance","Fabricated sources, citation errors and unsupported interpretations can enter scholarship.","Source verification, traceability and researcher accountability."],
+recruitment:["AI Recruitment","Historical data can reproduce unequal outcomes and opaque screening.","Equal-performance testing, subgroup analysis and human review."],
+wellbeing:["Wellbeing AI","Unsafe advice or missed escalation can create serious harm.","Recall, escalation quality and human referral."],
+agents:["Autonomous AI Agents","Agents may act beyond authorisation boundaries or become difficult to audit.","Permission controls, logs, bounded tools and human approval."],
+surveillance:["Digital-Campus Surveillance","Biometric or behavioural monitoring can create privacy and proportionality risks.","Necessity, privacy controls, transparency and recourse."],
+accessibility:["Accessibility AI","Poorly represented users may receive lower-quality support.","Accessibility testing, subgroup evaluation and inclusive design."],
+synthetic:["Synthetic-Media Integrity","AI-generated media can create misinformation or false accusations.","Provenance, disclosure and human verification."],
+governance:["Institution-wide AI Governance","Disconnected policies create gaps in ownership, monitoring and accountability.","Common assurance matrix, risk ownership and continuous governance."]
+};
+function renderDomains(){
+ const g=document.getElementById('domainGrid');g.innerHTML='';
+ domains.forEach(d=>{let el=document.createElement('div');el.className='domain';el.onclick=()=>filterDomain(d.id);el.innerHTML=`<div class="pic"><svg viewBox="0 0 260 110"><rect x="15" y="45" width="230" height="50" rx="8" fill="${d.id%2?'#dff8df':'#e1f5ff'}"/><circle cx="70" cy="42" r="28" fill="${d.id%2?'#6bd66b':'#7ed9f6'}"/><rect x="95" y="25" width="105" height="65" rx="6" fill="#fff" stroke="#0d82b7" stroke-width="2"/><path d="M110 40h75M110 53h55M110 66h65" stroke="#9bdcf0" stroke-width="5"/><text x="22" y="104" font-size="14">${d.icon}</text></svg></div><div class="domain-body"><h3>${d.id}. ${d.title}</h3><p>${d.short}</p><span class="pill">${d.n} Capabilities</span></div>`;g.appendChild(el)})
+}
+function renderCaps(list=caps){
+ const g=document.getElementById('capGrid');g.innerHTML='';
+ list.forEach((c,i)=>{let el=document.createElement('div');el.className='cap';el.onclick=()=>showCap(c);el.innerHTML=`<strong>${c[0]}</strong><p>${c[2]}</p><span class="tag">DOMAIN ${c[1]} · ${c[3]}</span>`;g.appendChild(el)})
+}
+function renderJobs(){document.getElementById('jobGrid').innerHTML=jobs.map(j=>`<div class="job"><span style="color:#638096;font-size:11px">CURRENT ROLE</span><b>${j[0]}</b><div class="arrow">↓</div><span style="color:#078b48;font-size:11px">2030 EVOLVED ROLE</span><b>${j[1]}</b></div>`).join('')}
+function filterDomain(id){renderCaps(caps.filter(c=>c[1]===id));go('capabilities');toast('Showing capabilities for Domain '+id)}
+function searchCaps(q){q=q.toLowerCase();renderCaps(caps.filter(c=>(c[0]+' '+c[2]+' '+c[3]+' '+c[4]).toLowerCase().includes(q)))}
+function showCap(c){showModal('cap');document.getElementById('modalContent').innerHTML=`<h2>${c[0]}</h2><p style="color:#58758a">${c[2]}</p><h3>Key risk</h3><p>${c[3]}</p><h3>Assurance focus</h3><p>${c[4]}</p><h3>University AI Assurance Matrix</h3><ul><li>Accountable owner and affected stakeholders</li><li>Risk classification and evidence threshold</li><li>System-specific metric and monitoring trigger</li><li>Human oversight, incident response and recourse</li><li>Workforce impact, role evolution and reskilling</li></ul>`}
+function riskInfo(k){let r=risks[k];document.getElementById('riskBox').innerHTML=`<b>${r[0]}</b><p>${r[1]}</p><b>Control:</b> ${r[2]}`}
+function sim(){let a=+document.querySelectorAll('#simulator input')[0].value,u=+document.querySelectorAll('#simulator input')[1].value,h=+document.querySelectorAll('#simulator input')[2].value,s=+document.querySelectorAll('#simulator input')[3].value;document.getElementById('aiv').textContent=a+'%';document.getElementById('autv').textContent=u+'%';document.getElementById('hov').textContent=h+'%';document.getElementById('suv').textContent=s+'%';document.getElementById('og').textContent=Math.round(45+a*.3+u*.25-h*.12);document.getElementById('oh').textContent=Math.round(35+h*.6);document.getElementById('os').textContent=Math.round(25+s*.65);document.getElementById('ow').textContent=Math.round(30+u*.35+(100-h)*.15)}
+function go(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'))}
+function showModal(type){document.getElementById('modal').classList.add('open');if(type==='video')document.getElementById('modalContent').innerHTML='<h2>AI-Enabled University of 2030 — Concept</h2><p>This prototype visualises the proposed university as one connected socio-technical ecosystem: AI capability → institutional risk → assurance → human oversight → workforce transition → continuous adaptation.</p><p><b>Core principle:</b> AI should augment human potential rather than simply eliminate human livelihoods.</p>';if(type==='assurance')document.getElementById('modalContent').innerHTML='<h2>University AI Assurance Matrix</h2><p>Every AI capability should be evaluated using a common structure while keeping metrics and thresholds specific to the system.</p><ul><li>AI use case and task</li><li>Stakeholders and risk level</li><li>Data and accountability owner</li><li>Human oversight and evidence threshold</li><li>Metric and monitoring trigger</li><li>Incident response and recourse</li><li>Disclosure and auditability</li><li>Workforce impact and reskilling</li></ul>'}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2600)}
+renderDomains();renderCaps();renderJobs();riskInfo('tutor');sim();
+</script>
+</body>
+</html>
